@@ -76,14 +76,20 @@
 	// 	if 
 	// };
 
-	function checkPlayerWin() {
+	function checkIfScoreIs21() {
 		if (newPlayerScoreValue === 21) {
-			setTimeout(alert("you win"), 6000);
+			alert("you win");
 			$(".dealClearButtons").show();
 			$(".hitStayButtons").hide();
 		}
-		else if (newPlayerScoreValue > 21) {
-			setTimeout(alert("you loose"), 6000);
+		else {
+			checkIfBust();
+		}
+	};
+	
+	function checkIfBust() {
+		if (newPlayerScoreValue > 21) {
+			alert("you loose");
 			$(".dealClearButtons").show();
 			$(".hitStayButtons").hide();
 		}
@@ -93,7 +99,6 @@
 		playerScoreValue = parseInt($("#playerScore").val());
 		newPlayerScoreValue = playerScoreValue + newArray[0].value;
 		$("#playerScore").attr("value", newPlayerScoreValue);
-		checkPlayerWin();
 	};
 
 	function addDealerScore() {
@@ -173,31 +178,48 @@ $(document).ready(function(){
 	
 	//click Deal button: deal the 1st 3 cards with delay
 	$("#deal").on("click", function(){
-		$(".dealClearButtons").hide();
-		$(".hitStayButtons").show();
+		if (parseInt($("#bet").val()) === 0) {
+			alert("Don't be so cheap. Bet something");
+		}
+		else {
 
-		setTimeout(function() {
-				$(".playerCard").append("<img src=\'" + getRandomCard() + "\'>"),
-				addPlayerScore()
-			}, 500
-		);
 
-		setTimeout(function() {
-				$(".dealerCard").append("<img src=\'" + getRandomCard() + "\'>"),
-				addDealerScore()
-			}, 1000
-		);
+			$(".dealClearButtons").hide();
+			$(".hitStayButtons").show();
 
-		setTimeout(function() {
-				$(".playerCard").append("<img src=\'" + getRandomCard() + "\'>"),
-				addPlayerScore()
-			}, 1500
-		);
+			setTimeout(
+				function() {
+					$(".playerCard").append("<img src=\'" + getRandomCard() + "\'>"),
+					addPlayerScore()
+				}, 
+				500
+			);
 
-		setTimeout(function() {	
-			$(".dealerCard").append("<img src=images//cards/b1pr.png>")
-			}, 2000
-		);
+			setTimeout(
+				function() {
+					$(".dealerCard").append("<img src=\'" + getRandomCard() + "\'>"),
+					addDealerScore()
+				}, 
+				1000
+			);
+
+			setTimeout(
+				function() {
+					$(".playerCard").append("<img src=\'" + getRandomCard() + "\'>"),
+					addPlayerScore()
+				}, 
+				1500
+			);
+
+			setTimeout(
+				function() {	
+				$(".dealerCard").append("<img src=images//cards/b1pr.png>")
+				}, 
+				2000
+			);
+
+			setTimeout(checkIfScoreIs21, 2100);
+		}
 	});
 
 	//click hit button: deal 1 card to player and add score
