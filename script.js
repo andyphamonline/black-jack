@@ -53,53 +53,40 @@
 		{image: "images/cards/52.png", value: 2},
 	];
 
+	function dealerTurn() {
+		drawDealerCard();
+		$(".hitStayButtons").hide();
+		setTimeout(
+			function(){
+				$(".dealerCard img:nth-child(2)").remove()
+			},
+			500	
+		);
+	};
+
+	function drawDealerCard() {
+		setTimeout(
+			function() {
+				getRandomCard(),
+				$(".dealerCard").append("<img src=\'" + getRandomCard() + "\'>"),
+				addDealerScore(),
+				countDealerAce()
+			}, 
+			500
+		);
+		setTimeout(
+			function() {
+				compareDealerScore17()
+			}, 
+			1000
+		);
+	}
+
 	function getRandomCard() {
 		var index = Math.floor(Math.random()*deckOfCards.length);
 		newArray = deckOfCards.splice(index, 1);
 		cardsOnBoard.push(newArray[0]);
 		return newArray[0].image;
-	};
-
-	function countPlayerAce() {
-		if (newArray[0].value === 11) {
-			playerAce++;
-		}
-	};
-
-	function countDealerAce() {
-		if (newArray[0].value === 11) {
-			dealerAce++;
-		}
-	};
-
-	function checkIfScoreIs21() {
-		if (newPlayerScoreValue === 21) {
-			whenWin();
-		}
-	};
-	
-	function checkIfBust() {
-		if (newPlayerScoreValue > 21) {
-			if (playerAce === 0) {
-				alert("you loose");
-				$(".dealClearButtons").hide();
-				$(".hitStayButtons").hide();
-				$("#playAgainButton").show();
-			}
-			else if (playerAce === 1) {
-				newPlayerScoreValue = newPlayerScoreValue - 10;
-				playerAce--;
-				$("#playerScore").attr("value", newPlayerScoreValue);
-				checkIfScoreIs21();
-			}
-			else if (playerAce === 2) {
-				newPlayerScoreValue = newPlayerScoreValue - 10;
-				playerAce--;
-				$("#playerScore").attr("value", newPlayerScoreValue);
-				checkIfScoreIs21();
-			}
-			
-		}
 	};
 
 	function addPlayerScore() {
@@ -114,20 +101,147 @@
 		$("#dealerScore").attr("value", newDealerScoreValue);
 	};
 
-	function whenWin() {
+	function countPlayerAce() {
+		if (newArray[0].value === 11) {
+			playerAce++;
+		}
+	};
+
+	function countDealerAce() {
+		if (newArray[0].value === 11) {
+			dealerAce++;
+		}
+	};
+
+	function compareDealerScore17() {
+		if (newDealerScoreValue < 17) {
+			drawDealerCard();
+		}
+		else {
+			checkIfDealerBust();
+		}
+	}
+
+	function checkIfDealerBust() {
+		if (newDealerScoreValue < 22) {
+			compareScore();
+		}
+		else {
+			if (dealerAce === 0) {
+				whenPlayerWin();
+			}
+			else if (dealerAce === 1) {
+				newDealerScoreValue = newDealerScoreValue - 10;
+				dealerAce--;
+				$("#dealerScore").attr("value", newDealerScoreValue);
+				compareDealerScore17()
+				checkIfDealerScore21()
+			}
+			else if (dealerAce === 2) {
+				newDealerScoreValue = newDealerScoreValue - 10;
+				dealerAce--;
+				$("#dealerScore").attr("value", newDealerScoreValue);
+				compareDealerScore17()
+				checkIfDealerScore21()
+			}
+		}
+	}
+
+	function checkIfDealerScore21() {
+		if (newDealerScoreValue === 21) {
+			compareScore();
+		}
+	}
+
+	function checkIfPlayerScore21() {
+		if (newPlayerScoreValue === 21) {
+			whenPlayerWin();
+		}
+	};
+	
+	function checkIfPlayerBust() {
+		if (newPlayerScoreValue > 21) {
+			if (playerAce === 0) {
+				alert("you loose");
+				$(".dealClearButtons").hide();
+				$(".hitStayButtons").hide();
+				$("#playAgainButton").show();
+			}
+			else if (playerAce === 1) {
+				newPlayerScoreValue = newPlayerScoreValue - 10;
+				playerAce--;
+				$("#playerScore").attr("value", newPlayerScoreValue);
+				checkIfPlayerScore21();
+			}
+			else if (playerAce === 2) {
+				newPlayerScoreValue = newPlayerScoreValue - 10;
+				playerAce--;
+				$("#playerScore").attr("value", newPlayerScoreValue);
+				checkIfPlayerScore21();
+			}			
+		}
+	};
+
+	function compareScore() {
+		if (newDealerScoreValue === newPlayerScoreValue) {
+			whenTie();
+		}
+		else if (newDealerScoreValue > newPlayerScoreValue) {
+			whenPlayerLoose();
+		}
+		else {
+			whenPlayerWin();
+		}
+	}
+
+	function whenTie() {
+		alert("money back");
+		$("#playAgainButton").show();
+		newBankrollValue = newBankrollValue + newBetValue;
+		$("#bankroll").attr("value", newBankrollValue);
+		newBetValue = 0;
+		$("#bet").attr("value", newBetValue);
+	}
+
+	function whenPlayerLoose() {
+		alert("you loose");
+		$(".dealClearButtons").hide();
+		$(".hitStayButtons").hide();
+		$("#playAgainButton").show();
+		newBetValue = 0;
+		$("#bet").attr("value", newBetValue);
+	};
+
+	function whenPlayerWin() {
 		alert("you win");
-			$(".dealClearButtons").hide();
-			$(".hitStayButtons").hide();
-			$("#playAgainButton").show();
+		$(".dealClearButtons").hide();
+		$(".hitStayButtons").hide();
+		$("#playAgainButton").show();
 		newWinValue = newBetValue * 2;
 		$("#win").attr("value", newWinValue);
 		newBankrollValue = newBankrollValue + newWinValue;
 		$("#bankroll").attr("value", newBankrollValue);
 	};
 
-	// function dealerTurn() {
-		
-	// }
+	function checkDealerScore() {
+		if (newDealerScoreValue > 21) {
+			if (dealerAce === 0) {
+				whenPlayerWin();
+			}
+			else if (dealerAce === 1) {
+				newDealerScoreValue = newDealerScoreValue - 10;
+				dealerAce--;
+				$("#dealerScore").attr("value", newDealerScoreValue);
+				checkDealerScore()
+			}
+			else if (dealerAce === 2) {
+				newDealerScoreValue = newDealerScoreValue - 10;
+				dealerAce--;
+				$("#dealerScore").attr("value", newDealerScoreValue);
+			}
+			
+		}
+	};
 		
 $(document).ready(function(){
 	
@@ -205,8 +319,6 @@ $(document).ready(function(){
 			alert("Don't be so cheap. Bet something");
 		}
 		else {
-
-
 			$(".dealClearButtons").hide();
 			$(".hitStayButtons").show();
 
@@ -244,8 +356,8 @@ $(document).ready(function(){
 				2000
 			);
 
-			setTimeout(checkIfScoreIs21, 1600);
-			setTimeout(checkIfBust, 1600);
+			setTimeout(checkIfPlayerScore21, 1600);
+			setTimeout(checkIfPlayerBust, 1600);
 		}
 	});
 
@@ -257,14 +369,15 @@ $(document).ready(function(){
 				countPlayerAce()
 			}, 500
 		);
-		setTimeout(checkIfScoreIs21, 600);
-		setTimeout(checkIfBust, 600);
+		setTimeout(checkIfPlayerScore21, 600);
+		setTimeout(checkIfPlayerBust, 600);
 		
 	});
 
 	//click stay button
 	$("#stay").on("click", function() {
-		// dealerTurn();
+		$(".hitStayButtons").hide();
+		dealerTurn();
 	});
 
 	$("#playAgainButton").on("click", function() {
