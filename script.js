@@ -105,7 +105,6 @@
 			$(".dealClearButtons").hide();
 			$(".hitStayButtons").hide();
 			$("#playAgainButton").show();
-
 		}
 	};
 	
@@ -294,8 +293,6 @@ $(document).ready(function(){
 		$("#playAgainButton").hide();
 		$
 	});
-
-
 
 
 
