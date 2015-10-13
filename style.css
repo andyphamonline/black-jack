@@ -1,0 +1,105 @@
+/*font doesn't work*/
+/*position of divs are not responsive*/
+
+@import url(https://fonts.googleapis.com/css?family=Lobster);
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400italic);
+
+body {
+	background: url("images/background.jpg") no-repeat center center fixed;
+	font-size: 16px;
+	height: 100vh;
+	margin: 1em auto;
+	text-align: center;
+}
+
+h1 {
+	color: white;
+	font-family: 'Lobster', cursive;
+	font-size: 4em;
+}
+
+h2 {
+	/*bottom: 50%;*/
+	color: #C8CC7C;
+	font-family: 'Droid Serif', serif;
+	font-size: 3em;
+	/*left: 30%;
+	position: absolute;*/
+}
+
+h3 {
+	color: #C8CC7C;
+	font-family: 'Droid Serif', serif;
+}
+
+h4 {
+	color: #719985;
+	display: inline-block;
+	font-size: 1.5em;
+	margin-left: 3em;
+}
+
+.name {
+	color: #719985;
+}
+
+.dealerCard, .playerCard {
+	height: 100px;
+}
+
+.dealClearButtons, .hitStayButtons, #playAgainButton {
+	bottom: 30%;
+	left: 45%;
+	position: absolute;
+}
+
+.chips {
+	bottom: 15%;
+	left: 35%;
+	position: absolute;
+}
+
+.chipsImage {
+	border-radius: 35px;
+}
+
+.chooseDealer {
+	margin: 0 auto;
+}
+
+.chooseDealerImage {
+	margin: 2em 3em;
+}
+
+.name {
+	color: white;
+	display: inline-block;
+	font-size: 1.5em;
+}
+
+.score {
+	width: 3em;
+}
+
+.status {
+	bottom: 5%;
+	left: 22%;
+	position: absolute;
+}
+
+#dealer1 {
+	width: 14.5%;
+}
+
+#dealer2 {
+	width: 12.5%;
+}
+
+#dealer3 {
+	width: 10%;
+}
+
+#dealer4 {
+	width: 10%;
+}
+
