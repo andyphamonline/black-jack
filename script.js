@@ -14,6 +14,8 @@
 	var image;
 	var value = 0;
 	var newArray = [];
+	var cardsOnBoard = [];
+
 	var deckOfCards = [
 		{image: "images/cards/1.png", value: 11, name: "ace"},
 		{image: "images/cards/2.png", value: 11, name: "ace"},
@@ -27,63 +29,34 @@
 		{image: "images/cards/2.png", value: 11, name: "ace"},
 		{image: "images/cards/3.png", value: 11, name: "ace"},
 		{image: "images/cards/4.png", value: 11, name: "ace"},
-
-
-
-
-		// {image: "images/cards/5.png", value: 10},
-		// {image: "images/cards/6.png", value: 10},
-		// {image: "images/cards/7.png", value: 10},
-		// {image: "images/cards/8.png", value: 10},
-		// {image: "images/cards/9.png", value: 10},
-		// {image: "images/cards/10.png", value: 10},
-		// {image: "images/cards/11.png", value: 10},
-		// {image: "images/cards/12.png", value: 10},
-		// {image: "images/cards/13.png", value: 10},
-		// {image: "images/cards/14.png", value: 10},
-		// {image: "images/cards/15.png", value: 10},
-		// {image: "images/cards/16.png", value: 10},
-		// {image: "images/cards/17.png", value: 10},
-		// {image: "images/cards/18.png", value: 10},
-		// {image: "images/cards/19.png", value: 10},
-		// {image: "images/cards/20.png", value: 10},
-		// {image: "images/cards/21.png", value: 9},
-		// {image: "images/cards/22.png", value: 9},
-		// {image: "images/cards/23.png", value: 9},
-		// {image: "images/cards/24.png", value: 9},
-		// {image: "images/cards/25.png", value: 8},
-		// {image: "images/cards/26.png", value: 8},
-		// {image: "images/cards/27.png", value: 8},
-		// {image: "images/cards/28.png", value: 8},
-		// {image: "images/cards/29.png", value: 7},
-		// {image: "images/cards/30.png", value: 7},
-		// {image: "images/cards/31.png", value: 7},
-		// {image: "images/cards/32.png", value: 7},
-		// {image: "images/cards/33.png", value: 6},
-		// {image: "images/cards/34.png", value: 6},
-		// {image: "images/cards/35.png", value: 6},
-		// {image: "images/cards/36.png", value: 6},
-		// {image: "images/cards/37.png", value: 5},
-		// {image: "images/cards/38.png", value: 5},
-		// {image: "images/cards/39.png", value: 5},
-		// {image: "images/cards/40.png", value: 5},
-		// {image: "images/cards/41.png", value: 4},
-		// {image: "images/cards/42.png", value: 4},
-		// {image: "images/cards/43.png", value: 4},
-		// {image: "images/cards/44.png", value: 4},
-		// {image: "images/cards/45.png", value: 3},
-		// {image: "images/cards/46.png", value: 3},
-		// {image: "images/cards/47.png", value: 3},
-		// {image: "images/cards/48.png", value: 3},
-		// {image: "images/cards/49.png", value: 2},
-		// {image: "images/cards/50.png", value: 2},
-		// {image: "images/cards/51.png", value: 2},
-		// {image: "images/cards/52.png", value: 2},
+		{image: "images/cards/4.png", value: 11, name: "ace"},
+		{image: "images/cards/1.png", value: 11, name: "ace"},
+		{image: "images/cards/2.png", value: 11, name: "ace"},
+		{image: "images/cards/3.png", value: 11, name: "ace"},
+		{image: "images/cards/4.png", value: 11, name: "ace"},
+		
+		{image: "images/cards/37.png", value: 5},
+		{image: "images/cards/38.png", value: 5},
+		{image: "images/cards/39.png", value: 5},
+		{image: "images/cards/40.png", value: 5},
+		{image: "images/cards/41.png", value: 4},
+		{image: "images/cards/42.png", value: 4},
+		{image: "images/cards/43.png", value: 4},
+		{image: "images/cards/44.png", value: 4},
+		{image: "images/cards/45.png", value: 3},
+		{image: "images/cards/46.png", value: 3},
+		{image: "images/cards/47.png", value: 3},
+		{image: "images/cards/48.png", value: 3},
+		{image: "images/cards/49.png", value: 2},
+		{image: "images/cards/50.png", value: 2},
+		{image: "images/cards/51.png", value: 2},
+		{image: "images/cards/52.png", value: 2},
 	];
 
 	function getRandomCard() {
 		var index = Math.floor(Math.random()*deckOfCards.length);
 		newArray = deckOfCards.splice(index, 1);
+		cardsOnBoard.push(newArray[0]);
 		return newArray[0].image;
 	};
 
@@ -101,10 +74,7 @@
 
 	function checkIfScoreIs21() {
 		if (newPlayerScoreValue === 21) {
-			alert("you win");
-			$(".dealClearButtons").hide();
-			$(".hitStayButtons").hide();
-			$("#playAgainButton").show();
+			whenWin();
 		}
 	};
 	
@@ -118,18 +88,17 @@
 			}
 			else if (playerAce === 1) {
 				newPlayerScoreValue = newPlayerScoreValue - 10;
+				playerAce--;
 				$("#playerScore").attr("value", newPlayerScoreValue);
 				checkIfScoreIs21();
 			}
 			else if (playerAce === 2) {
 				newPlayerScoreValue = newPlayerScoreValue - 10;
+				playerAce--;
 				$("#playerScore").attr("value", newPlayerScoreValue);
 				checkIfScoreIs21();
-				if (newPlayerScoreValue > 21) {
-					newPlayerScoreValue = newPlayerScoreValue - 10;
-					$("#playerScore").attr("value", newPlayerScoreValue);
-				}
-			}			
+			}
+			
 		}
 	};
 
@@ -146,11 +115,19 @@
 	};
 
 	function whenWin() {
+		alert("you win");
+			$(".dealClearButtons").hide();
+			$(".hitStayButtons").hide();
+			$("#playAgainButton").show();
 		newWinValue = newBetValue * 2;
 		$("#win").attr("value", newWinValue);
-		newBankrollValue = newBankrollValue + newBetValue;
+		newBankrollValue = newBankrollValue + newWinValue;
 		$("#bankroll").attr("value", newBankrollValue);
 	};
+
+	// function dealerTurn() {
+		
+	// }
 		
 $(document).ready(function(){
 	
@@ -277,21 +254,36 @@ $(document).ready(function(){
 		setTimeout(function() {
 				$(".playerCard").append("<img src=\'" + getRandomCard() + "\'>"),
 				addPlayerScore()
+				countPlayerAce()
 			}, 500
 		);
 		setTimeout(checkIfScoreIs21, 600);
 		setTimeout(checkIfBust, 600);
+		
 	});
 
 	//click stay button
 	$("#stay").on("click", function() {
-		alert("dealer turn")
+		// dealerTurn();
 	});
 
 	$("#playAgainButton").on("click", function() {
 		$(".dealClearButtons").show();
 		$("#playAgainButton").hide();
-		$
+		newBetValue = 0;
+		$("#bet").attr("value", newBetValue);
+		newWinValue = 0;
+		$("#win").attr("value", newWinValue);
+		newPlayerScoreValue = 0;
+		$("#playerScore").attr("value", newPlayerScoreValue);
+		newDealerScoreValue = 0;
+		$("#dealerScore").attr("value", newDealerScoreValue);
+		$(".playerCard").html("");
+		$(".dealerCard").html("");
+		deckOfCards = deckOfCards.concat(cardsOnBoard);
+		cardsOnBoard = [];
+		playerAce = 0;
+		dealerAce = 0;
 	});
 
 
