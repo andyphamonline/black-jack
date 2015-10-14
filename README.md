@@ -1,6 +1,6 @@
 # Blackjack
 
-1. This is a single deck blackjack.
+1. Single deck blackjack.
 2. Aces maybe counted as 1 or 11 points. Tens and face cards count as ten points.
 3. Player chooses 1 of 4 lucky dealers.
 4. Player chooses amount to bet then has the options below:

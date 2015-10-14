@@ -12,7 +12,6 @@
 	var index = 0;
 	var newArray = [];
 	var cardsOnBoard = [];
-
 	var deckOfCards = [
 		{image: "images/cards/1.png", value: 11,},
 		{image: "images/cards/2.png", value: 11,},
@@ -296,47 +295,22 @@ $(document).ready(function(){
 	});
 
 	//click on each chip value to decrease bankroll & increase bet amount
-	//ask to shorten this block
-	$("#chip1").on("click", function() {
-		bankrollValue = parseInt($("#bankroll").val());
-		newBankrollValue = bankrollValue - 1;
-		$("#bankroll").attr("value", newBankrollValue);
+	function chooseChips (chip, amount) {
+			$(chip).on("click", function() {
+			bankrollValue = parseInt($("#bankroll").val());
+			newBankrollValue = bankrollValue - amount;
+			$("#bankroll").attr("value", newBankrollValue);
 
-		betValue = parseInt($("#bet").val());
-		newBetValue = betValue + 1;
-		$("#bet").attr("value", newBetValue);
-	});
+			betValue = parseInt($("#bet").val());
+			newBetValue = betValue + amount;
+			$("#bet").attr("value", newBetValue);
+		});
+	}
 
-	$("#chip5").on("click", function() {
-		bankrollValue = parseInt($("#bankroll").val());
-		newBankrollValue = bankrollValue - 5;
-		$("#bankroll").attr("value", newBankrollValue);
-
-		betValue = parseInt($("#bet").val());
-		newBetValue = betValue + 5;
-		$("#bet").attr("value", newBetValue);
-	});
-
-	$("#chip25").on("click", function() {
-		bankrollValue = parseInt($("#bankroll").val());
-		newBankrollValue = bankrollValue - 25;
-		$("#bankroll").attr("value", newBankrollValue);
-
-		betValue = parseInt($("#bet").val());
-		newBetValue = betValue + 25;
-		$("#bet").attr("value", newBetValue);
-	});
-
-	$("#chip100").on("click", function() {
-		bankrollValue = parseInt($("#bankroll").val());
-		newBankrollValue = bankrollValue - 100;
-		$("#bankroll").attr("value", newBankrollValue);
-
-		betValue = parseInt($("#bet").val());
-		newBetValue = betValue + 100;
-		$("#bet").attr("value", newBetValue);
-	});
-//shorten this block end
+	chooseChips ("#chip1", 1);
+	chooseChips ("#chip5", 5);
+	chooseChips ("#chip25", 25);
+	chooseChips ("#chip100", 100);
 
 	//click clear to reset bankroll & bet amount
 	$("#clear").on("click", function(){
@@ -358,32 +332,24 @@ $(document).ready(function(){
 			$(".dealClearButtons").hide();
 			$(".hitStayButtons").show();
 
-			setTimeout(
-				function() {
-					$(".playerCard").append("<img src=\'" + getRandomCard() + "\'>"),
-					addPlayerScore(),
-					countPlayerAce()
-				}, 
-				500
-			);
+			function dealCard (player, time) {
+				var divName = (player === "player") ? ".playerCard" : ".dealerCard"
+				var callback1 = (player === "player") ? addPlayerScore : addDealerScore
+				var callback2 = (player === "player") ? countPlayerAce : countDealerAce
 
-			setTimeout(
-				function() {
-					$(".dealerCard").append("<img src=\'" + getRandomCard() + "\'>"),
-					addDealerScore(),
-					countDealerAce()
-				}, 
-				1000
-			);
+				setTimeout(
+					function() {
+						$(divName).append("<img src=\'" + getRandomCard() + "\'>");
+						callback1();
+						callback2();
+					}, 
+					time
+				);
+			}
 
-			setTimeout(
-				function() {
-					$(".playerCard").append("<img src=\'" + getRandomCard() + "\'>"),
-					addPlayerScore()
-					countPlayerAce()
-				}, 
-				1500
-			);
+			dealCard("player", 500);
+			dealCard("dealer", 1000);
+			dealCard("player", 1500);
 
 			setTimeout(
 				function() {	
