@@ -177,7 +177,14 @@
 	function checkIfPlayerBust() {
 		if (newPlayerScoreValue > 21) {
 			if (playerAce === 0) {
-				alert("you loose");
+				setTimeout(function() {
+					swal({
+						title: "Thanks for the donation!",
+						imageUrl: "images/loose.png"
+					})
+				},
+					800
+				);
 				$(".dealClearButtons").hide();
 				$(".hitStayButtons").hide();
 				$("#playAgainButton").show();
@@ -210,20 +217,41 @@
 	}
 
 	function whenTie() {
-		alert("money back");
+		setTimeout(function() {
+			swal({
+				title: "It's a tie",
+				imageUrl: "images/tie.png"
+			})
+		},
+			800
+		);
 		$("#playAgainButton").show();
 		newBankrollValue = newBankrollValue + newBetValue;
 	}
 
 	function whenPlayerLoose() {
-		alert("you loose");
+		setTimeout(function() {
+			swal({
+				title: "Thanks for the donation!",
+				imageUrl: "images/loose.png"
+			})
+		},
+			800
+		);
 		$(".dealClearButtons").hide();
 		$(".hitStayButtons").hide();
 		$("#playAgainButton").show();
 	};
 
 	function whenPlayerWin() {
-		alert("you win");
+		setTimeout(function() {
+			swal({
+				title: "EZ money",
+				imageUrl: "images/win.jpg"
+			})
+		},
+			800
+		);
 		$(".dealClearButtons").hide();
 		$(".hitStayButtons").hide();
 		$("#playAgainButton").show();
@@ -253,10 +281,7 @@
 		
 $(document).ready(function(){
 	
-	$("main, .dealClearButtons, .hitStayButtons").hide();
-	$(".status").hide();
-	$("#playAgainButton").hide();
-	$(".dealerImage").show();
+	$("main, .dealClearButtons, .hitStayButtons, #playAgainButton, .status").hide();
 
 	//choose dealer
 	$(".chooseDealerImage").on("click", function(){
@@ -324,7 +349,10 @@ $(document).ready(function(){
 	//click Deal button: deal the 1st 3 cards with delay
 	$("#deal").on("click", function(){
 		if (parseInt($("#bet").val()) === 0) {
-			alert("Don't be so cheap. Bet something");
+			swal({
+				title: "Don't be so cheap. Bet something",
+				imageUrl: "images/cheap.jpg"
+			});
 		}
 		else {
 			$(".dealClearButtons").hide();
@@ -408,10 +436,4 @@ $(document).ready(function(){
 		playerAce = 0;
 		dealerAce = 0;
 	});
-
-
-
-
-
-
 });
