@@ -19,12 +19,9 @@ h1 {
 }
 
 h2 {
-	/*bottom: 50%;*/
 	color: #C8CC7C;
 	font-family: 'Droid Serif', serif;
 	font-size: 3em;
-	/*left: 30%;
-	position: absolute;*/
 }
 
 h3 {
@@ -55,7 +52,7 @@ h4 {
 
 .chips {
 	bottom: 15%;
-	left: 35%;
+	left: 40%;
 	position: absolute;
 }
 
@@ -83,7 +80,7 @@ h4 {
 
 .status {
 	bottom: 5%;
-	left: 22%;
+	left: 28%;
 	position: absolute;
 }
 

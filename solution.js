@@ -1,3 +1,29 @@
+whenTie
+	alert("money back")
+	bankroll = bankroll + bet
+
+whenLoose	
+	alert("you loose")
+
+whenWin
+	alert("you win")
+	win = bet * 2
+	win display
+
+playAgainButton
+	bankroll = bankroll + win
+	bankroll display
+	
+	bet = 0;
+	bet display
+	
+	win = 0
+	win display
+	
+Dealer draw
+	tie: bankroll = NaN
+
+
 function dealerTurn()
 	setTimeout 500
 		drawDealerCard()

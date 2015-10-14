@@ -6,13 +6,10 @@
 	var newDealerScoreValue;
 	var betValue;
 	var newBetValue;
-	var newWinValue;
-	var thereIsAnAce = false;
+	var newWinValue = 0;
 	var playerAce = 0;
 	var dealerAce = 0;
 	var index = 0;
-	var image;
-	var value = 0;
 	var newArray = [];
 	var cardsOnBoard = [];
 
@@ -52,7 +49,7 @@
 		{image: "images/cards/33.png", value: 6},
 		{image: "images/cards/34.png", value: 6},
 		{image: "images/cards/35.png", value: 6},
-		{image: "images/cards/36.png", value: 6},	
+		{image: "images/cards/36.png", value: 6},
 		{image: "images/cards/37.png", value: 5},
 		{image: "images/cards/38.png", value: 5},
 		{image: "images/cards/39.png", value: 5},
@@ -216,9 +213,6 @@
 		alert("money back");
 		$("#playAgainButton").show();
 		newBankrollValue = newBankrollValue + newBetValue;
-		$("#bankroll").attr("value", newBankrollValue);
-		newBetValue = 0;
-		$("#bet").attr("value", newBetValue);
 	}
 
 	function whenPlayerLoose() {
@@ -226,8 +220,6 @@
 		$(".dealClearButtons").hide();
 		$(".hitStayButtons").hide();
 		$("#playAgainButton").show();
-		newBetValue = 0;
-		$("#bet").attr("value", newBetValue);
 	};
 
 	function whenPlayerWin() {
@@ -237,8 +229,6 @@
 		$("#playAgainButton").show();
 		newWinValue = newBetValue * 2;
 		$("#win").attr("value", newWinValue);
-		newBankrollValue = newBankrollValue + newWinValue;
-		$("#bankroll").attr("value", newBankrollValue);
 	};
 
 	function checkDealerScore() {
@@ -399,6 +389,8 @@ $(document).ready(function(){
 	});
 
 	$("#playAgainButton").on("click", function() {
+		newBankrollValue = newBankrollValue + newWinValue;
+		$("#bankroll").attr("value", newBankrollValue);
 		$(".dealClearButtons").show();
 		$("#playAgainButton").hide();
 		newBetValue = 0;
