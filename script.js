@@ -1,3 +1,5 @@
+//
+
 	var bankrollValue;
 	var newBankrollValue;
 	var playerScoreValue;
@@ -66,6 +68,38 @@
 		{image: "images/cards/51.png", value: 2},
 		{image: "images/cards/52.png", value: 2},
 	];
+
+	function chooseChips (chip, amount) {		
+		$(chip).on("click", function() {
+			if (newBankrollValue < 1) {
+				alert("you can't play on credit");
+			}
+			else {
+				bankrollValue = parseInt($("#bankroll").val());
+				newBankrollValue = bankrollValue - amount;
+				$("#bankroll").attr("value", newBankrollValue);
+
+				betValue = parseInt($("#bet").val());
+				newBetValue = betValue + amount;
+				$("#bet").attr("value", newBetValue);
+			}
+		});
+	};
+
+	function dealCard (player, time) {
+		var divName = (player === "player") ? ".playerCard" : ".dealerCard"
+		var callback1 = (player === "player") ? addPlayerScore : addDealerScore
+		var callback2 = (player === "player") ? countPlayerAce : countDealerAce
+
+		setTimeout(
+			function() {
+				$(divName).append("<img src=\'" + getRandomCard() + "\'>");
+				callback1();
+				callback2();
+			}, 
+			time
+		);
+	};
 
 	function dealerTurn() {
 		drawDealerCard();
@@ -295,18 +329,6 @@ $(document).ready(function(){
 	});
 
 	//click on each chip value to decrease bankroll & increase bet amount
-	function chooseChips (chip, amount) {
-			$(chip).on("click", function() {
-			bankrollValue = parseInt($("#bankroll").val());
-			newBankrollValue = bankrollValue - amount;
-			$("#bankroll").attr("value", newBankrollValue);
-
-			betValue = parseInt($("#bet").val());
-			newBetValue = betValue + amount;
-			$("#bet").attr("value", newBetValue);
-		});
-	}
-
 	chooseChips ("#chip1", 1);
 	chooseChips ("#chip5", 5);
 	chooseChips ("#chip25", 25);
@@ -331,22 +353,6 @@ $(document).ready(function(){
 		else {
 			$(".dealClearButtons").hide();
 			$(".hitStayButtons").show();
-
-			function dealCard (player, time) {
-				var divName = (player === "player") ? ".playerCard" : ".dealerCard"
-				var callback1 = (player === "player") ? addPlayerScore : addDealerScore
-				var callback2 = (player === "player") ? countPlayerAce : countDealerAce
-
-				setTimeout(
-					function() {
-						$(divName).append("<img src=\'" + getRandomCard() + "\'>");
-						callback1();
-						callback2();
-					}, 
-					time
-				);
-			}
-
 			dealCard("player", 500);
 			dealCard("dealer", 1000);
 			dealCard("player", 1500);
