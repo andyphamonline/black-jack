@@ -10,7 +10,7 @@ body {
 }
 
 h1 {
-	color: white;
+	color: #FFEE45;
 	font-family: 'Lobster', cursive;
 	font-size: 4em;
 }
@@ -27,6 +27,7 @@ h3 {
 	font-family: 'Droid Serif', serif;
 	font-size: 3em;
 	font-style: italic;
+	margin: .8em;
 }
 
 h4 {
@@ -72,7 +73,8 @@ h4 {
 }
 
 .chooseDealerImage {
-	margin: 2em 3em;
+	margin: .5em;
+	width: 19%;
 }
 
 .name {
@@ -89,20 +91,4 @@ h4 {
 	bottom: 5%;
 	left: 28%;
 	position: absolute;
-}
-
-#dealer1 {
-	width: 14.5%;
-}
-
-#dealer2 {
-	width: 12.5%;
-}
-
-#dealer3 {
-	width: 10%;
-}
-
-#dealer4 {
-	width: 10%;
 }
