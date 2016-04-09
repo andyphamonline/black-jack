@@ -298,12 +298,18 @@ $(document).ready(function(){
 	function chooseChips (chip, amount) {
 			$(chip).on("click", function() {
 			bankrollValue = parseInt($("#bankroll").val());
-			newBankrollValue = bankrollValue - amount;
-			$("#bankroll").attr("value", newBankrollValue);
 
-			betValue = parseInt($("#bet").val());
-			newBetValue = betValue + amount;
-			$("#bet").attr("value", newBetValue);
+			if(bankrollValue - amount < 0){	
+				alert("You don't have enough money to bet!");
+			} else {
+				newBankrollValue = bankrollValue - amount;
+				$("#bankroll").attr("value", newBankrollValue);
+
+				betValue = parseInt($("#bet").val());
+				newBetValue = betValue + amount;
+				$("#bet").attr("value", newBetValue);
+			}
+
 		});
 	}
 
